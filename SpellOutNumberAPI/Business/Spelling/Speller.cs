@@ -1,21 +1,15 @@
-﻿using SpellOutNumberAPI.Repo;
+﻿using System.Globalization;
+using SpellOutNumberAPI.Repo;
 
-namespace SpellOutNumberAPI;
+namespace SpellOutNumberAPI.Business.Spelling;
 
-public class Speller : ISpeller
+public class Speller(ISpellRepo spellRepo) : ISpeller
 {
-    private readonly ISpellRepo _spellRepo;
-
-    public Speller(ISpellRepo spellRepo)
-    {
-        _spellRepo = spellRepo;
-    }
-
     public string SpellOut(int number)
     {
         if (number == 0)
         {
-            return _spellRepo.Zero;
+            return spellRepo.Zero;
         }
                 
         var groupIndex = 0;
@@ -28,7 +22,7 @@ public class Speller : ISpeller
             {
                 var groupText = SpellOutGroup(group);
                 spelledOut =
-                    $"{groupText} {_spellRepo.Thousands[groupIndex]} {spelledOut}";
+                    $"{groupText} {spellRepo.Thousands[groupIndex]} {spelledOut}";
             }
 
             number /= 1000;
@@ -45,7 +39,7 @@ public class Speller : ISpeller
         var hundreds = group / 100;
         if (hundreds > 0)
         {
-            spelledOutGroup += $"{_spellRepo.Units[hundreds]} {_spellRepo.Hundred} ";
+            spelledOutGroup += $"{spellRepo.Units[hundreds]} {spellRepo.Hundred} ";
         }
 
         var lastTwoDigits = group % 100;
@@ -53,17 +47,17 @@ public class Speller : ISpeller
         switch (lastTwoDigits)
         {
             case < 10:
-                spelledOutGroup += _spellRepo.Units[lastTwoDigits];
+                spelledOutGroup += spellRepo.Units[lastTwoDigits];
                 break;
             case < 20:
-                spelledOutGroup += _spellRepo.Teens[lastTwoDigits - 10];
+                spelledOutGroup += spellRepo.Teens[lastTwoDigits - 10];
                 break;
             default:
             {
                 var tensDigit = lastTwoDigits / 10;
                 var unitsDigit = lastTwoDigits % 10;
                 spelledOutGroup +=
-                    $"{_spellRepo.Tens[tensDigit]} {_spellRepo.Units[unitsDigit]}";
+                    $"{spellRepo.Tens[tensDigit]} {spellRepo.Units[unitsDigit]}";
                 break;
             }
         }

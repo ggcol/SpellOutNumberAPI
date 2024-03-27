@@ -1,4 +1,4 @@
-﻿namespace SpellOutNumberAPI;
+﻿namespace SpellOutNumberAPI.Business.Spelling;
 
 public interface ISpeller
 {

@@ -1,3 +1,4 @@
+using SpellOutNumberAPI.Business.Spelling;
 using SpellOutNumberAPI.Repo;
 
 namespace SpellOutNumberAPI.Tests;
@@ -12,7 +13,7 @@ public class SpellerTests
     public void SpellOut_GivenANumber_ReturnsItsValueSpelled(int number, string expected)
     {
         //Arrange
-        var repo = new SpellRepo();
+        var repo = new EnSpellRepo();
         var speller = new Speller(repo);
         
         //Act

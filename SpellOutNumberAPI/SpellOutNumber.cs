@@ -2,32 +2,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
+using SpellOutNumberAPI.Business.Culture;
+using SpellOutNumberAPI.Business.Spelling;
 using SpellOutNumberAPI.Validation;
 
 namespace SpellOutNumberAPI;
 
 public class SpellOutNumber
 {
-    private readonly ISpeller _speller;
     private readonly IValidator _validate;
+    private readonly ISpellerProvider _spellerProvider;
 
     public SpellOutNumber(
         ILogger<SpellOutNumber> logger,
-        ISpeller speller,
-        IValidator validate)
+        IValidator validate,
+        ISpellerProvider spellerProvider)
     {
-        _speller = speller;
         _validate = validate;
+        _spellerProvider = spellerProvider;
     }
 
-    [Function("SpellOutNumber")]
+    [Function(nameof(SpellOut))]
+    [Route("/{input}/{culture}")]
     [HttpGet]
-    public IActionResult Run(
+    public IActionResult SpellOut(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get")]
-        HttpRequestData req)
+        HttpRequestData req, string input, string? culture)
     {
-        var input = req.Query["number"];
-
         if (!_validate.HasValue(input))
         {
             return new BadRequestResult();
@@ -51,8 +52,20 @@ public class SpellOutNumber
             return new BadRequestObjectResult("Number must be positive!");
         }
 
-        var spelledOut = _speller.SpellOut(number);
+        try
+        {
+            var spelledOut = _spellerProvider
+                .GetSpeller(
+                    _validate.HasValue(culture)
+                        ? culture!
+                        : KnownCultures.English)
+                .SpellOut(number);
 
-        return new OkObjectResult(spelledOut);
+            return new OkObjectResult(spelledOut);
+        }
+        catch (LocalizationServiceArgumentException ex)
+        {
+            return new BadRequestObjectResult(ex.Message);
+        }
     }
 }
