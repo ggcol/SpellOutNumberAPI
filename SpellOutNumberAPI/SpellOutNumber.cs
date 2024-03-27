@@ -19,7 +19,7 @@ public class SpellOutNumber(
     {
         var input = req.Query["number"];
 
-        if (validate.HasValue(input)) return new BadRequestResult();
+        if (!validate.HasValue(input)) return new BadRequestResult();
 
         if (validate.AnyNonNumericChar(input!))
         {
