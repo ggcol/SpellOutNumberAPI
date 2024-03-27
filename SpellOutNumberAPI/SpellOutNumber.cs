@@ -6,11 +6,20 @@ using SpellOutNumberAPI.Validation;
 
 namespace SpellOutNumberAPI;
 
-public class SpellOutNumber(
-    ILogger<SpellOutNumber> logger,
-    ISpeller speller,
-    IValidator validate)
+public class SpellOutNumber
 {
+    private readonly ISpeller _speller;
+    private readonly IValidator _validate;
+
+    public SpellOutNumber(
+        ILogger<SpellOutNumber> logger,
+        ISpeller speller,
+        IValidator validate)
+    {
+        _speller = speller;
+        _validate = validate;
+    }
+
     [Function("SpellOutNumber")]
     [HttpGet]
     public IActionResult Run(
@@ -19,9 +28,12 @@ public class SpellOutNumber(
     {
         var input = req.Query["number"];
 
-        if (!validate.HasValue(input)) return new BadRequestResult();
+        if (!_validate.HasValue(input))
+        {
+            return new BadRequestResult();
+        }
 
-        if (validate.AnyNonNumericChar(input!))
+        if (_validate.AnyNonNumericChar(input!))
         {
             return new BadRequestObjectResult("Not a number, unable to parse!");
         }
@@ -39,7 +51,7 @@ public class SpellOutNumber(
             return new BadRequestObjectResult("Number must be positive!");
         }
 
-        var spelledOut = speller.SpellOut(number);
+        var spelledOut = _speller.SpellOut(number);
 
         return new OkObjectResult(spelledOut);
     }

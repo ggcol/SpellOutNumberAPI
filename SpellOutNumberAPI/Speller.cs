@@ -13,7 +13,10 @@ public class Speller : ISpeller
 
     public string SpellOut(int number)
     {
-        if (number == 0) return _spellRepo.Zero;
+        if (number == 0)
+        {
+            return _spellRepo.Zero;
+        }
                 
         var groupIndex = 0;
         var spelledOut = "";
