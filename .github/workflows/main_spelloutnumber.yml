@@ -32,6 +32,12 @@ jobs:
           dotnet build --configuration Release --output ./output
           popd
 
+      - name: 'Run Tests'
+        run: |
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          dotnet test
+          popd
+
       - name: 'Run Azure Functions Action'
         uses: Azure/functions-action@v1
         id: fa
