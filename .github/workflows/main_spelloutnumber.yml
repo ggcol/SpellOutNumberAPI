@@ -14,7 +14,7 @@ env:
   DOTNET_VERSION: '8.0.x' # set this to the dotnet version to use
 
 jobs:
-  build-and-deploy:
+  build-test-deploy:
     runs-on: windows-latest
     steps:
       - name: 'Checkout GitHub Action'
@@ -34,7 +34,7 @@ jobs:
 
       - name: 'Run Tests'
         run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/SpellOutNumberAPI.Tests'
           dotnet test
           popd
 
