@@ -5,7 +5,7 @@ namespace SpellOutNumberAPI.Tests;
 [TestFixture]
 public class ValidatorTests
 {
-    private IValidator _validate = new Validator();
+    private readonly IValidator _validate = new Validator();
 
     [TestCase(null)]
     [TestCase(" ")]
