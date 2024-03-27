@@ -1,4 +1,6 @@
-﻿namespace SpellOutNumberAPI;
+﻿using SpellOutNumberAPI.Repo;
+
+namespace SpellOutNumberAPI;
 
 public class Speller : ISpeller
 {

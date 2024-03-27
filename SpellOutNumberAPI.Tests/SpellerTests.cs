@@ -1,3 +1,5 @@
+using SpellOutNumberAPI.Repo;
+
 namespace SpellOutNumberAPI.Tests;
 
 [TestFixture]
