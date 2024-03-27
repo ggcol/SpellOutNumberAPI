@@ -1,1 +1,1 @@
-# SpellOutNumberAPI
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/1187a31303f94b959654b5ec7e57e1af)](https://app.codacy.com?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
