@@ -2,6 +2,6 @@
 
 public interface IValidator
 {
-    bool HasValue(string? input);
-    bool AnyNonNumericChar(string input);
+    public bool HasValue(string? input);
+    public bool AnyNonNumericChar(string input);
 }

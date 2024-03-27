@@ -1,6 +1,6 @@
 ﻿namespace SpellOutNumberAPI.Repo;
 
-public class SpellRepo : ISpellRepo
+public class EnSpellRepo : ISpellRepo
 {
     public string Zero => "Zero";
     public string Hundred => "Hundred";
