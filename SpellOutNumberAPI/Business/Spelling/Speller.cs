@@ -1,9 +1,8 @@
-﻿using System.Globalization;
-using SpellOutNumberAPI.Repo;
+﻿using SpellOutNumberAPI.Repo;
 
 namespace SpellOutNumberAPI.Business.Spelling;
 
-public class Speller(ISpellRepo spellRepo) : ISpeller
+internal sealed class Speller(ISpellRepo spellRepo) : ISpeller
 {
     public string SpellOut(int number)
     {
@@ -28,8 +27,20 @@ public class Speller(ISpellRepo spellRepo) : ISpeller
             number /= 1000;
             groupIndex++;
         } while (number > 0);
+        
+        return ToHumanCase(spelledOut.Trim());
+    }
 
-        return spelledOut.Trim();
+    private static string ToHumanCase(string spelledOut)
+    {
+        if (string.IsNullOrEmpty(spelledOut))
+            return spelledOut;
+
+        return string.Create(spelledOut.Length, spelledOut, (span, str) =>
+        {
+            span[0] = char.ToUpperInvariant(str[0]);
+            str.AsSpan(1).ToLowerInvariant(span[1..]);
+        });
     }
 
     private string SpellOutGroup(int group)

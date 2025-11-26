@@ -1,5 +1,4 @@
-﻿using NuGet.Frameworks;
-using SpellOutNumberAPI.Business.Culture;
+﻿using SpellOutNumberAPI.Business.Culture;
 
 namespace SpellOutNumberAPI.Tests;
 

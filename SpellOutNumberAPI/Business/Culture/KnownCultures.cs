@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace SpellOutNumberAPI.Business.Culture;
+﻿namespace SpellOutNumberAPI.Business.Culture;
 
 public abstract class KnownCultures
 {

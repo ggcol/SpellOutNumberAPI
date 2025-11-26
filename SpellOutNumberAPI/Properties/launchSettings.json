@@ -1,8 +1,8 @@
 {
   "profiles": {
-    "SpellOutNumberAPI": {
+    "SpellOutNumberAPIv2": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7159",
+      "commandLineArgs": "--port 7263",
       "launchBrowser": false
     }
   }

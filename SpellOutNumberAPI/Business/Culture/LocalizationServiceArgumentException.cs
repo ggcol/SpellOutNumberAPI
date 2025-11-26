@@ -1,4 +1,4 @@
 ﻿namespace SpellOutNumberAPI.Business.Culture;
 
-public class LocalizationServiceArgumentException(string message)
+internal sealed class LocalizationServiceArgumentException(string message)
     : ArgumentException(message);

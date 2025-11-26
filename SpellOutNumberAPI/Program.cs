@@ -1,21 +1,15 @@
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Azure.Functions.Worker.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SpellOutNumberAPI.Business.Culture;
 using SpellOutNumberAPI.Business.Spelling;
-using SpellOutNumberAPI.Validation;
 
-var host = new HostBuilder()
-    .ConfigureFunctionsWebApplication()
-    .ConfigureServices(services =>
-    {
-        services
-            .AddApplicationInsightsTelemetryWorkerService()
-            .ConfigureFunctionsApplicationInsights()
-            .AddScoped<IValidator, Validator>()
-            .AddScoped<ILocalizationService, LocalizationService>()
-            .AddScoped<ISpellerProvider, SpellerProvider>();
-    })
-    .Build();
+var builder = FunctionsApplication.CreateBuilder(args);
 
-host.Run();
+builder.ConfigureFunctionsWebApplication();
+
+builder.Services
+    .AddScoped<ILocalizationService, LocalizationService>()
+    .AddScoped<ISpellerFactory, SpellerFactory>();
+
+builder.Build().Run();

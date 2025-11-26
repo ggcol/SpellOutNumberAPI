@@ -1,6 +1,6 @@
 ﻿namespace SpellOutNumberAPI.Repo;
 
-public interface ISpellRepo
+internal interface ISpellRepo
 {
     public string Zero { get; }
     public string Hundred { get; }

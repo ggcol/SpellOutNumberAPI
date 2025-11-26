@@ -2,15 +2,10 @@
 
 namespace SpellOutNumberAPI.Business.Spelling;
 
-public interface ISpellerProvider
+internal sealed class SpellerFactory(ILocalizationService localization)
+    : ISpellerFactory
 {
-    ISpeller GetSpeller(string inputCulture);
-}
-
-public class SpellerProvider(ILocalizationService localization)
-    : ISpellerProvider
-{
-    public ISpeller GetSpeller(string inputCulture)
+    public ISpeller Get(string inputCulture)
     {
         var culture = localization.GetCulture(inputCulture);
         var repo = localization.GetLocalizedData(culture);

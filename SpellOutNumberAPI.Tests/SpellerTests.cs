@@ -8,8 +8,8 @@ public class SpellerTests
 {
     [TestCase(0, "Zero")]
     [TestCase(13, "Thirteen")]
-    [TestCase(25, "Twenty Five")]
-    [TestCase(5555, "Five Thousand Five Hundred Fifty Five")]
+    [TestCase(25, "Twenty five")]
+    [TestCase(5555, "Five thousand five hundred fifty five")]
     public void SpellOut_GivenANumber_ReturnsItsValueSpelled(int number, string expected)
     {
         //Arrange
